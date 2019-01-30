@@ -16,10 +16,10 @@ import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.ss.usermodel.WorkbookFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.home.samik.SpringBootWithAngular.dao.FileDao;
+import com.home.samik.SpringBootWithAngular.dto.StockDto;
 import com.home.samik.SpringBootWithAngular.entity.StockDetails;
 
 @Service
@@ -107,6 +107,26 @@ public class FileServiceImpl implements FileService {
 	@Override
 	public Integer getTotalNoOfStock() {
 		return fileDao.getTotalNoOfStock();
+	}
+
+	@Override
+	public Integer deleteStockById(Integer id) throws Exception {
+		return fileDao.deleteStockById(id);
+	}
+
+	@Override
+	public Integer duplicateStock(StockDto stockDto) throws Exception {
+		return fileDao.duplicateStock(stockDto);
+	}
+
+	@Override
+	public Integer saveStock(StockDto stockDto) throws Exception {
+		return fileDao.saveStock(stockDto);
+	}
+
+	@Override
+	public Integer editStock(Integer id, StockDto stockDto) throws Exception {
+		return fileDao.editStock(id, stockDto);
 	}
 
 }

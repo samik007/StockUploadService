@@ -4,13 +4,16 @@ import java.util.List;
 import java.util.Objects;
 
 import javax.persistence.EntityManagerFactory;
+import javax.persistence.ParameterMode;
 
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.procedure.ProcedureCall;
 import org.hibernate.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.home.samik.SpringBootWithAngular.dto.StockDto;
 import com.home.samik.SpringBootWithAngular.entity.StockDetails;
 
 @Repository
@@ -89,6 +92,88 @@ public class FileDaoImpl implements FileDao {
 			session.close();
 		}
 		return count;
+	}
+
+	@Override
+	public Integer deleteStockById(Integer id) throws Exception {
+		Session session = entityManagerFactory.unwrap(SessionFactory.class).openSession();
+		Integer status = 0;
+		try {
+			Query<?> query = session.createNativeQuery("Delete from stock_details where id = :id");
+			status = query.executeUpdate();
+		} finally {
+			session.clear();
+			session.close();
+		}
+		return status;
+	}
+
+	@Override
+	public Integer duplicateStock(StockDto stockDto) throws Exception {
+		Session session = entityManagerFactory.unwrap(SessionFactory.class).openSession();
+		Integer status = 0;
+
+		StockDetails stockDetails = new StockDetails();
+		stockDetails.setClose(stockDto.getClose());
+		stockDetails.setDate(stockDto.getDate());
+		stockDetails.setCompanySymbol(stockDto.getCompanySymbol());
+		stockDetails.setOpen(stockDto.getOpen());
+		stockDetails.setLow(stockDto.getLow());
+		stockDetails.setHigh(stockDto.getHigh());
+		stockDetails.setVolume(stockDto.getVolume());
+
+		try {
+			session.save(stockDetails);
+			status = 1;
+		} finally {
+			session.clear();
+			session.close();
+		}
+		return status;
+	}
+
+	@Override
+	public Integer saveStock(StockDto stockDto) throws Exception {
+		Session session = entityManagerFactory.unwrap(SessionFactory.class).openSession();
+		Integer status = 0;
+		try {
+
+			ProcedureCall procedureCall = session.createStoredProcedureCall("dbo.p_saveStock");
+
+			procedureCall.registerParameter("date", String.class, ParameterMode.IN).bindValue(stockDto.getDate());
+			procedureCall.registerParameter("companySymbol", String.class, ParameterMode.IN)
+					.bindValue(stockDto.getCompanySymbol());
+			procedureCall.registerParameter("open", Float.class, ParameterMode.IN).bindValue(stockDto.getOpen());
+			procedureCall.registerParameter("close", Float.class, ParameterMode.IN).bindValue(stockDto.getClose());
+			procedureCall.registerParameter("low", Float.class, ParameterMode.IN).bindValue(stockDto.getClose());
+			procedureCall.registerParameter("high", Float.class, ParameterMode.IN).bindValue(stockDto.getHigh());
+			procedureCall.registerParameter("volume", Long.class, ParameterMode.IN).bindValue(stockDto.getVolume());
+			procedureCall.registerParameter("outStatus", Integer.class, ParameterMode.OUT);
+			procedureCall.execute();
+
+			Object output = procedureCall.getOutputParameterValue("outStatus");
+			status = (Integer) output;
+
+		} finally {
+			session.clear();
+			session.close();
+		}
+		return status;
+	}
+
+	@Override
+	public Integer editStock(Integer id, StockDto stockDto) throws Exception {
+		Session session = entityManagerFactory.unwrap(SessionFactory.class).openSession();
+		Integer status = 0;
+		try {
+			stockDto.setId(id);
+			session.update(stockDto);
+			status = 1;
+		} finally {
+			session.clear();
+			session.close();
+		}
+		return status;
 	}
 
 }

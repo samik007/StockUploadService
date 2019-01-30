@@ -1,41 +1,17 @@
-package com.home.samik.SpringBootWithAngular.entity;
+package com.home.samik.SpringBootWithAngular.dto;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import org.springframework.stereotype.Component;
 
-@Entity
-public class StockDetails {
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name="stock_id")
+@Component
+public class StockDto {
 	private Integer id;
-	
-	@Column(name="stock_date")
 	private String date;
-	
-	@Column(name="stock_company_symbol")
 	private String companySymbol;
-	
-	@Column(name="stock_open")
 	private float open;
-	
-	@Column(name="stock_close")
 	private float close;
-	
-	@Column(name="stock_low")
 	private float low;
-	
-	@Column(name="stock_high")
 	private float high;
-	
-	@Column(name="stock_volume")
 	private long volume;
-	
-	public StockDetails() {}
-	
 	public Integer getId() {
 		return id;
 	}
