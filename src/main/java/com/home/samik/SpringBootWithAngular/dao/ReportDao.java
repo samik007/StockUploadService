@@ -1,0 +1,7 @@
+package com.home.samik.SpringBootWithAngular.dao;
+
+import java.util.List;
+
+public interface ReportDao {
+	public List<?> getVolumeChart() throws Exception;
+}

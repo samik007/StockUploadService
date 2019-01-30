@@ -112,7 +112,7 @@ public class FileController {
 				responseDto.setData((Object) status);
 			} else {
 				responseDto.setResponseCode(HttpStatus.NO_CONTENT);
-				responseDto.setResponseMessage(StockConstantFile.STOCK_SUCCESS);
+				responseDto.setResponseMessage(StockConstantFile.NO_CONTENT);
 				responseDto.setData((Object) status);
 			}
 		} catch (Exception ex) {
@@ -134,7 +134,7 @@ public class FileController {
 				responseDto.setData((Object) status);
 			} else {
 				responseDto.setResponseCode(HttpStatus.NO_CONTENT);
-				responseDto.setResponseMessage(StockConstantFile.STOCK_SUCCESS);
+				responseDto.setResponseMessage(StockConstantFile.NO_CONTENT);
 				responseDto.setData((Object) status);
 			}
 		} catch (Exception ex) {
@@ -156,7 +156,7 @@ public class FileController {
 				responseDto.setData((Object) status);
 			} else {
 				responseDto.setResponseCode(HttpStatus.NO_CONTENT);
-				responseDto.setResponseMessage(StockConstantFile.STOCK_SUCCESS);
+				responseDto.setResponseMessage(StockConstantFile.NO_CONTENT);
 				responseDto.setData((Object) status);
 			}
 		} catch (Exception ex) {
@@ -178,7 +178,7 @@ public class FileController {
 				responseDto.setData((Object) status);
 			} else {
 				responseDto.setResponseCode(HttpStatus.NO_CONTENT);
-				responseDto.setResponseMessage(StockConstantFile.STOCK_SUCCESS);
+				responseDto.setResponseMessage(StockConstantFile.NO_CONTENT);
 				responseDto.setData((Object) status);
 			}
 		} catch (Exception ex) {
