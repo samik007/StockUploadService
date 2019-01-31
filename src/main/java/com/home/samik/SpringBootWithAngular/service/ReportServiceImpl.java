@@ -8,6 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.home.samik.SpringBootWithAngular.dao.ReportDao;
+import com.home.samik.SpringBootWithAngular.dto.HighGraphDto;
+import com.home.samik.SpringBootWithAngular.dto.LowGraphDto;
 import com.home.samik.SpringBootWithAngular.dto.VolumeChartDto;
 
 @Service
@@ -27,6 +29,32 @@ public class ReportServiceImpl implements ReportService {
 			});
 		}
 		return listVolumeChartDto;
+	}
+
+	@Override
+	public List<HighGraphDto> getHighGraph() throws Exception {
+		List<?> rawListHighGraphDto = reportDao.getHighGraph();
+		final List<HighGraphDto> listHighGraphDto = new ArrayList<>();
+		if (Objects.nonNull(rawListHighGraphDto) && rawListHighGraphDto.size() > 0) {
+			rawListHighGraphDto.forEach(i -> {
+				HighGraphDto highGraphDto = (HighGraphDto) i;
+				listHighGraphDto.add(highGraphDto);
+			});
+		}
+		return listHighGraphDto;
+	}
+
+	@Override
+	public List<LowGraphDto> getLowGraph() throws Exception {
+		List<?> rawListLowGraphDto = reportDao.getLowGraph();
+		final List<LowGraphDto> listLowGraphDto = new ArrayList<>();
+		if (Objects.nonNull(rawListLowGraphDto) && rawListLowGraphDto.size() > 0) {
+			rawListLowGraphDto.forEach(i -> {
+				LowGraphDto lowGraphDto = (LowGraphDto) i;
+				listLowGraphDto.add(lowGraphDto);
+			});
+		}
+		return listLowGraphDto;
 	}
 	
 }
